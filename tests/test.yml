@@ -1,0 +1,11 @@
+---
+- hosts: all
+  connection: ssh
+  become: yes
+  become_user: root
+  gather_facts: yes
+  remote_user: vagrant
+  roles:
+    - role: maven
+      maven_user: vagrant
+    - spec
