@@ -1,0 +1,38 @@
+---
+- name: Verify maven version
+  shell: bash -lc 'mvn --version'
+  register: result
+
+- assert:
+    that:
+      - result.rc == 0
+      - "'Maven' in result.stdout"
+      - "maven_version in result.stdout"
+
+- name: Verify maven is available to non-root user
+  shell: bash -lc 'mvn --version'
+  become: vagrant
+  register: nonroot_result
+
+- assert:
+    that: 
+      - nonroot_result.rc == 0
+      - "maven_version in nonroot_result.stdout"
+
+- block:
+    - name: put a basic pom file on the filesytem
+      copy:
+        src: pom.xml
+        dest: /tmp/pom.xml
+        mode: 0644
+    
+    - name: run maven dependency resolution
+      shell: bash -lc 'mvn -B dependency:resolve 1>/tmp/maven.log 2>/tmp/maven.log'
+      register: maven_exec
+      become: vagrant
+      args:
+        chdir: /tmp
+
+    - assert:
+        that:
+          - maven_exec.rc == 0
