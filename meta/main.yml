@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: old.noakes@gmail.com
+  description: Installs maven (version 3+) and ensures it is available for users to use
+  license: MIT
+  min_ansible_version: 2.3.0
+  platforms:
+  - name: EL
+    versions:
+     - 7
+  galaxy_tags:
+    - maven
+    - mvn
+    - centos
+dependencies:
+  - { role: geerlingguy.java, java_packages: ['java-1.8.0-openjdk'] }

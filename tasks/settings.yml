@@ -1,0 +1,33 @@
+---
+- name: discover maven user home
+  shell: "getent passwd {{ maven_user }} | cut -d: -f6"
+  register: home_discovery
+
+- set_fact:
+    maven_user_homedir: "{{ home_discovery.stdout }}"
+
+- name: create .m2 directory
+  file:
+    path: "{{ maven_user_homedir }}/.m2"
+    owner: "{{ maven_user }}"
+    group: "{{ maven_user }}"
+    state: directory
+    mode: 0750
+
+- name: create default maven settings file
+  copy:
+    src: settings.xml
+    dest: "{{ maven_user_homedir }}/.m2/settings.xml"
+    owner: "{{ maven_user }}"
+    group: "{{ maven_user }}"
+    mode: 0640
+  when: maven_settings_file_content is not defined
+
+- name: create maven settings file based on the given content
+  template:
+    src: custom_settings.xml.j2
+    dest: "{{ maven_user_homedir }}/.m2/settings.xml"
+    owner: "{{ maven_user }}"
+    group: "{{ maven_user }}"
+    mode: 0640
+  when: maven_settings_file_content is defined

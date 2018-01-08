@@ -1,0 +1,23 @@
+---
+- name: Unarchive maven
+  unarchive:
+    src: "{{ maven_package_url }}"
+    dest: "{{ maven_install_dir }}"
+    copy: no
+
+- name: setup maven in installed dir
+  file:
+    path: "{{ maven_install_dir }}/apache-maven-{{ maven_version }}"
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Configure maven
+  template:
+    src: etc/profile.d/maven.sh
+    dest: /etc/profile.d/maven.sh
+    owner: root
+    group: root
+    mode: 0755

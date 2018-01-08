@@ -1,0 +1,8 @@
+---
+maven_mirror_base: "https://archive.apache.org/"
+maven_mirror_path: "dist/maven/maven-3"
+maven_mirror_url: "{{ maven_mirror_base }}{{ maven_mirror_path }}"
+maven_package_url: "{{ maven_mirror_url }}/{{ maven_version }}/binaries/apache-maven-{{ maven_version }}-bin.tar.gz"
+
+maven_install_dir: "/usr/local"
+maven_version: "3.5.0"
