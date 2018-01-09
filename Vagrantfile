@@ -23,13 +23,14 @@ Vagrant.configure("2") do |config|
 
     # Centos/7 box has default rsync enabled in its Vagrantfile so manually disabling here - see: https://github.com/hashicorp/vagrant/issues/6154
     conf.vm.synced_folder '.', '/vagrant', disabled: true
+    
     conf.vm.provider "virtualbox" do |vb|
       vb.name = name
       vb.customize ['modifyvm', :id, '--memory', ram]
     end
 
     forwarded_ports.each do |port|
-      config.vm.network "forwarded_port", guest: port[:guest], host: port[:host]
+      conf.vm.network "forwarded_port", guest: port[:guest], host: port[:host]
     end
 
     conf.vm.provision :shell, inline: "cat /etc/redhat-release"
