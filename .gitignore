@@ -12,3 +12,4 @@ tests/docker/docker.env
 tests/venv
 docker_return_code
 test.yml.sample
+ansible-role-testing-framework.zip

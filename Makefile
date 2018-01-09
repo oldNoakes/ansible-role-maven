@@ -13,6 +13,9 @@ running_docker := $(shell docker ps -q -f name=${role_name})
 usage:
 	@printf "${YELLOW}make test                 ${GREEN}# Test using docker. ${NC}\n"
 	@printf "${YELLOW}make debug                ${GREEN}# Test using docker and returns to bash on the container. ${NC}\n"
+	@printf "${YELLOW}make vagrant_up           ${GREEN}# Test using vagrant up. ${NC}\n"
+	@printf "${YELLOW}make vagrant_provision    ${GREEN}# Test using vagrant provision. ${NC}\n"
+	@printf "${YELLOW}make vagrant_destroy      ${GREEN}# Destroy the vagrant box. ${NC}\n"
 
 verify:
 	@which virtualenv >/dev/null || (printf "${RED}Please install virtualenv${NC}\n" && exit 1)
@@ -46,11 +49,21 @@ docker_run: docker_env
 	docker run -P --name ${role_name} -d --cap-add=SYS_ADMIN --cap-add=NET_ADMIN -v /sys/fs/cgroup:/sys/fs/cgroup:ro --rm --hostname ${role_name} -e "container=docker" --env-file ./tests/docker/docker.env ${DOCKERIMG}:latest
 
 test: docker_clean configure docker_env docker_sshkey
-	source tests/venv/bin/activate && ./tests/docker/ansible_local.sh; echo $$? > docker_return_code
+	source tests/venv/bin/activate && ./tests/docker/ansible.sh; echo $$? > docker_return_code
 	@docker kill ${role_name}
 	@exit $$(cat docker_return_code)
 
 debug: docker_clean configure docker_env docker_sshkey
-	source tests/venv/bin/activate && ./tests/docker/ansible_local.sh; docker exec -it ${role_name} /bin/bash
+	source tests/venv/bin/activate && ./tests/docker/ansible.sh; docker exec -it ${role_name} /bin/bash
+
+
+vagrant_up: clean verify configure
+	source tests/venv/bin/activate && vagrant up
+
+vagrant_provision: clean verify configure
+	source tests/venv/bin/activate && vagrant provision
+
+vagrant_destroy:
+	vagrant destroy -f
 
 .PHONY: test
