@@ -13,16 +13,16 @@ end
 #    forwarded_ports = [{ guest: 8080, host: 11080 }, { guest: 8081, host: 11081}]
 # Which will forward the ports on Vagrantbox 8080/8081 to local box 11080/11081
 forwarded_ports = []
+name = "maven"
+ram =  ENV['ANSIBLE_ROLE_RAM'] || '1536'  
 
-test_role = "maven"
 Vagrant.configure("2") do |config|
-
-  name = "#{test_role}-centos7"
-  ram =  ENV['ANSIBLE_ROLE_RAM'] || '1536'
   config.vm.define name do |conf|
-    config.vm.box = "centos/7"
+    conf.vm.box = "centos/7"
     conf.vm.hostname = "#{name}.tester.vagrant.local"
 
+    # Centos/7 box has default rsync enabled in its Vagrantfile so manually disabling here - see: https://github.com/hashicorp/vagrant/issues/6154
+    conf.vm.synced_folder '.', '/vagrant', disabled: true
     conf.vm.provider "virtualbox" do |vb|
       vb.name = name
       vb.customize ['modifyvm', :id, '--memory', ram]
