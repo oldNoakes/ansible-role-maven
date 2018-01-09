@@ -6,6 +6,6 @@
   gather_facts: yes
   remote_user: vagrant
   roles:
-    - role: maven
+    - role: ansible-role-maven
       maven_user: vagrant
     - spec
