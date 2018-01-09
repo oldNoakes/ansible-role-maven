@@ -1,13 +1,12 @@
 ---
 - name: Verify maven version
   shell: bash -lc 'mvn --version'
-  register: result
+  register: root_result
 
 - assert:
     that:
-      - result.rc == 0
-      - "'Maven' in result.stdout"
-      - "maven_version in result.stdout"
+      - root_result.rc == 0
+      - "'Maven' in root_result.stdout"
 
 - name: Verify maven is available to non-root user
   shell: bash -lc 'mvn --version'
@@ -17,7 +16,7 @@
 - assert:
     that: 
       - nonroot_result.rc == 0
-      - "maven_version in nonroot_result.stdout"
+      - "'Maven' in nonroot_result.stdout"
 
 - block:
     - name: put a basic pom file on the filesytem
@@ -27,8 +26,9 @@
         mode: 0644
     
     - name: run maven dependency resolution
-      shell: bash -lc 'mvn -B dependency:resolve 1>/tmp/maven.log 2>/tmp/maven.log'
+      shell: bash -lc 'mvn -B dependency:resolve'
       register: maven_exec
+      no_log: true
       become: vagrant
       args:
         chdir: /tmp
@@ -36,3 +36,4 @@
     - assert:
         that:
           - maven_exec.rc == 0
+          - "'BUILD SUCCESS' in maven_exec.stdout"
