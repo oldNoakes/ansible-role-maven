@@ -3,7 +3,7 @@ galaxy_info:
   author: old.noakes@gmail.com
   description: Installs maven (version 3+) and ensures it is available for users to use
   license: MIT
-  min_ansible_version: 2.3.0
+  min_ansible_version: 2.4.0
   platforms:
   - name: EL
     versions:
