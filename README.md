@@ -1,6 +1,6 @@
 # Maven Role
 
-## Introduction
+[![Build Status](https://travis-ci.org/oldNoakes/ansible-role-maven.svg?branch=master)](https://travis-ci.org/oldNoakes/ansible-role-maven)
 
 This role installs apache maven and makes it available to be used by all users on the system.
 
