@@ -1,6 +1,8 @@
 sudo: required
 language: c
 services:
-- docker
+  - docker
 script:
-- make test
+  - make test
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
