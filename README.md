@@ -53,11 +53,11 @@ Here is an example of setting up a custom settings file via variable injection:
   version: 1.0.0
 
 # from Galaxy with specific tagged version
-- src: oldnoakes.maven
+- src: oldNoakes.maven
   version : 1.0.0
 
 # from Galaxy 
-- src: oldnoakes.maven
+- src: oldNoakes.maven
 ```
 
 ### Role usage in playbook
@@ -67,5 +67,5 @@ Here is an example of setting up a custom settings file via variable injection:
 ```yaml
 - hosts: servers
   roles:
-    - oldnoakes.maven
+    - oldNoakes.maven
 ```
