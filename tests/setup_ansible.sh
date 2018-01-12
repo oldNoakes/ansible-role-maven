@@ -8,7 +8,7 @@ export PATH=${START_DIR}/venv/bin:${PATH}
 export PIP_CONFIG_FILE=${START_DIR}/pip.conf
 
 function init_virtualenv() {
-  virtualenv --python=/usr/bin/python2.7 --no-site-packages venv && source venv/bin/activate && pip install -r pip-requirements.txt
+  virtualenv --no-site-packages venv && source venv/bin/activate && pip install -r pip-requirements.txt
 }
 
 function run_ansible_galaxy() {
