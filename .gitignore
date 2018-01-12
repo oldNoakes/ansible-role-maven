@@ -2,14 +2,14 @@
 *.iml
 *.iws
 *.ipr
-.vagrant
+.vagrant/*
 .vscode/*
 *.retry
 setup.sh
 tests/roles/*
 !tests/roles/spec
 tests/docker/docker.env
+tests/docker/docker.rc
 tests/venv
-docker_return_code
 test.yml.sample
 ansible-role-testing-framework.zip
