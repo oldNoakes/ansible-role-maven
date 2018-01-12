@@ -6,9 +6,9 @@
   gather_facts: yes
   remote_user: vagrant
   roles:
-    - role: ansible-role-maven
+    - role: maven
       maven_user: vagrant
-    - role: ansible-role-maven
+    - role: maven
       maven_settings_file_content: |
         <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
