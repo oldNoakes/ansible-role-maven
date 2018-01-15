@@ -5,11 +5,10 @@
 .vagrant/*
 .vscode/*
 *.retry
-setup.sh
 tests/roles/*
 !tests/roles/spec
 tests/docker/docker.env
 tests/docker/docker.rc
 tests/venv
-test.yml.sample
-ansible-role-testing-framework.zip
+tests/test.yml.sample
+.artfw/downloads/*
